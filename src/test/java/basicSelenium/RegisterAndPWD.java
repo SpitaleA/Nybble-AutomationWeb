@@ -1,17 +1,16 @@
 package basicSelenium;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.Random;
 
-public class Register {
+public class RegisterAndPWD {
 
     public String email = getAlphaNumericString()+"@"+getAlphaNumericString()+".com";
     WebDriver driver;
@@ -35,6 +34,8 @@ public class Register {
         // click sing up
         driver.findElement(By.id("ctl00_MainContent_SignupControl1_ButtonSignup")).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        Assertions.assertTrue(driver.findElement(By.id("CurrentProjectTitle")).isDisplayed());
     }
     @AfterEach
     public void cleanUp(){
@@ -58,6 +59,7 @@ public class Register {
         // click login
         driver.findElement(By.id("ctl00_MainContent_LoginControl1_ButtonLogin")).click();
         Thread.sleep(1000);
+        Assertions.assertTrue(driver.findElement(By.id("CurrentProjectTitle")).isDisplayed());
     }
     static String getAlphaNumericString()
     {
