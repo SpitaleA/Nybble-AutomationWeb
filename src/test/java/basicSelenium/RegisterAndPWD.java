@@ -15,14 +15,14 @@ public class RegisterAndPWD {
     public String email = getAlphaNumericString()+"@"+getAlphaNumericString()+".com";
     WebDriver driver;
     @BeforeEach
-    public void setup() throws InterruptedException {
+    public void register() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver","src/test/resources/driver/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://todo.ly/");
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         // click sing up
-        driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_PanelNotAuth\"]/div[2]/div[1]/div[3]/a")).click();
+        driver.findElement(By.xpath("//img[@src='/Images/design/pagesignup.png']")).click();
         // set name
         driver.findElement(By.id("ctl00_MainContent_SignupControl1_TextBoxFullName")).sendKeys("agusto");
         // set email
@@ -33,8 +33,8 @@ public class RegisterAndPWD {
         driver.findElement(By.id("ctl00_MainContent_SignupControl1_CheckBoxTerms")).click();
         // click sing up
         driver.findElement(By.id("ctl00_MainContent_SignupControl1_ButtonSignup")).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
+        //Verificacion
         Assertions.assertTrue(driver.findElement(By.id("CurrentProjectTitle")).isDisplayed());
     }
     @AfterEach
@@ -43,11 +43,11 @@ public class RegisterAndPWD {
     }
     @Test
     public void changePWD() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@id=\"ctl00_HeaderTopControl1_PanelHeaderButtons\"]/a[1]")).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.findElement(By.xpath("//a[@href=\"javascript:OpenSettingsDialog();\"]")).click();
         driver.findElement(By.id("TextPwOld")).sendKeys("12345");
         driver.findElement(By.id("TextPwNew")).sendKeys("123456");
-        driver.findElement(By.xpath("/html/body/div[9]/div[2]/div/button[1]/span")).click();
-        Thread.sleep(1000);
+        driver.findElement(By.xpath("//button//span[text()=\"Ok\"]")).click();
         driver.findElement(By.id("ctl00_HeaderTopControl1_LinkButtonLogout")).click();
 
         // click login
@@ -58,7 +58,8 @@ public class RegisterAndPWD {
         driver.findElement(By.id("ctl00_MainContent_LoginControl1_TextBoxPassword")).sendKeys("123456");
         // click login
         driver.findElement(By.id("ctl00_MainContent_LoginControl1_ButtonLogin")).click();
-        Thread.sleep(1000);
+
+        //Verificacion
         Assertions.assertTrue(driver.findElement(By.id("CurrentProjectTitle")).isDisplayed());
     }
     static String getAlphaNumericString()

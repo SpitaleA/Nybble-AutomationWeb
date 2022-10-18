@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class CRUDProjectTest {
 
@@ -27,7 +28,7 @@ public class CRUDProjectTest {
         driver.findElement(By.id("ctl00_MainContent_LoginControl1_TextBoxPassword")).sendKeys("123456");
         // click login
         driver.findElement(By.id("ctl00_MainContent_LoginControl1_ButtonLogin")).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
     @AfterEach
     public void cleanUp(){
@@ -42,15 +43,15 @@ public class CRUDProjectTest {
 
         //Boton add new project
         driver.findElement(By.cssSelector("#MainTable > tbody > tr > td.MainTableLeft > div:nth-child(6) > div")).click();
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
         driver.findElement(By.id("NewProjNameInput")).sendKeys("nuevo projecto");
         driver.findElement(By.id("NewProjNameButton")).click();
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
 
         //Verificacion
         Assertions.assertEquals(largo2+1,driver.findElements(By.xpath("//li//td[text()='nuevo " +
                 "projecto']")).size(),"ERROR no se creo el proyecto");
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
 
         //Edit project
         driver.findElement(By.xpath("//li[last()]//td[text()='nuevo projecto']")).click();
