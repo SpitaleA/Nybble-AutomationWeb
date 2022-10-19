@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Date;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
 public class itemTodoLy {
     WebDriver driver;
     @BeforeEach
@@ -44,7 +46,7 @@ public class itemTodoLy {
         // Explicit Wait --- Button -> Logout
 
         WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Logout']")));
+        wait.until(elementToBeClickable(By.xpath("//a[text()='Logout']")));
         Actions acciones = new Actions(driver);
 
         Assertions.assertTrue(driver.findElement(By.xpath("//a[text()='Logout']")).isDisplayed(),
@@ -68,16 +70,16 @@ public class itemTodoLy {
 
         wait.until(ExpectedConditions.textToBe(By.id("CurrentProjectTitle"), nameProj));
         driver.findElement(By.id("NewItemContentInput")).sendKeys("nuevo item" + Keys.ENTER);
-        wait.until(ExpectedConditions.textToBe(By.xpath("//div[text()='nuevo item']"), "nuevo item"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("NewItemAddButton")));
         Assertions.assertEquals("nuevo item",driver.findElement(By.xpath("//div[text()='nuevo item']")).getText(),"ERROR no se edito el item");
 
 
         //EDITO EL ITEM CREADO ANTERIORMENTE
 
-        wait.until(ExpectedConditions.textToBe(By.xpath("//div[text()='nuevo item']"), "nuevo item"));
+//        wait.until(ExpectedConditions.textToBe(By.xpath("//div[text()='nuevo item']"), "nuevo item"));
         driver.findElement(By.xpath("//div[text()='nuevo item']")).click();
         driver.findElement(By.xpath("//textarea[@id='ItemEditTextbox']")).sendKeys(" update" + Keys.ENTER);
-        wait.until(ExpectedConditions.textToBe(By.xpath("//div[text()='nuevo item update']"), "nuevo item update"));
+        wait.until(ExpectedConditions.not(visibilityOf(driver.findElement(By.xpath("//img[@id=\"LoaderImg\" and contains(concat(' ', @style, ' '), ' display: block;')]")))));
         Assertions.assertEquals("nuevo item update",driver.findElement(By.xpath("//div[text()='nuevo item update']")).getText(),"ERROR no se edito el item");
 
 
@@ -86,7 +88,7 @@ public class itemTodoLy {
         driver.findElement(By.xpath("//div[@class=\"ItemIndicator\"]//img[@src=\"/Images/dropdown.png\" and @style=\"display: inline;\"]")).click();
         acciones.moveToElement(driver.findElement(By.xpath("//ul[@id=\"itemContextMenu\"]//a[@href=\"#delete\"]"))).pause(Duration.ofSeconds(1)).perform();
         driver.findElement(By.xpath("//ul[@id=\"itemContextMenu\"]//a[@href=\"#delete\"]")).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@id='InfoMessageText']")));
+        wait.until(elementToBeClickable(By.xpath("//span[@id='InfoMessageText']")));
         Assertions.assertEquals("Item has been Deleted",driver.findElement(By.xpath("//span[@id='InfoMessageText']")).getText(),"ERROR no se borro el item");
     }
 }
