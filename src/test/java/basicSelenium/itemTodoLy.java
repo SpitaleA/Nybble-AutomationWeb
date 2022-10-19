@@ -78,17 +78,21 @@ public class itemTodoLy {
 
 //        wait.until(ExpectedConditions.textToBe(By.xpath("//div[text()='nuevo item']"), "nuevo item"));
         driver.findElement(By.xpath("//div[text()='nuevo item']")).click();
-        driver.findElement(By.xpath("//textarea[@id='ItemEditTextbox']")).sendKeys(" update" + Keys.ENTER);
+        driver.findElement(By.xpath("//textarea[@id='ItemEditTextbox']")).clear();
+        driver.findElement(By.xpath("//textarea[@id='ItemEditTextbox']")).sendKeys("nuevo item update" + Keys.ENTER);
         wait.until(ExpectedConditions.not(visibilityOf(driver.findElement(By.xpath("//img[@id=\"LoaderImg\" and contains(concat(' ', @style, ' '), ' display: block;')]")))));
         Assertions.assertEquals("nuevo item update",driver.findElement(By.xpath("//div[text()='nuevo item update']")).getText(),"ERROR no se edito el item");
-
+        int numItems = driver.findElements(By.xpath("//ul[@id=\"mainItemList\"]//li")).size();
 
         //BORRO ELEMENTO CREADO ANTERIORMENTE
         acciones.moveToElement(driver.findElement(By.xpath("//div[text()='nuevo item update']"))).pause(Duration.ofSeconds(1)).perform();
         driver.findElement(By.xpath("//div[@class=\"ItemIndicator\"]//img[@src=\"/Images/dropdown.png\" and @style=\"display: inline;\"]")).click();
         acciones.moveToElement(driver.findElement(By.xpath("//ul[@id=\"itemContextMenu\"]//a[@href=\"#delete\"]"))).pause(Duration.ofSeconds(1)).perform();
         driver.findElement(By.xpath("//ul[@id=\"itemContextMenu\"]//a[@href=\"#delete\"]")).click();
-        wait.until(elementToBeClickable(By.xpath("//span[@id='InfoMessageText']")));
-        Assertions.assertEquals("Item has been Deleted",driver.findElement(By.xpath("//span[@id='InfoMessageText']")).getText(),"ERROR no se borro el item");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//ul[@id=\"mainItemList\"]//li")));
+//        wait.until(elementToBeClickable(By.xpath("//ul[@id=\"mainItemList\"]//li")));
+//        Assertions.assertEquals("Item has been Deleted",driver.findElement(By.xpath("//span[@id='InfoMessageText']")).getText(),"ERROR no se borro el item");
+        Assertions.assertEquals(numItems-1,driver.findElements(By.xpath("//ul[@id=\"mainItemList\"]//li")).size(),"ERROR no se borro el item");
+
     }
 }
