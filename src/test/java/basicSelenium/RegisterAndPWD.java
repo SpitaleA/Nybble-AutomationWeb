@@ -61,6 +61,7 @@ public class RegisterAndPWD {
 
         //Verificacion
         Assertions.assertTrue(driver.findElement(By.id("CurrentProjectTitle")).isDisplayed());
+        Thread.sleep(1000);
     }
     static String getAlphaNumericString()
     {
