@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,7 +23,10 @@ public class itemTodoLy {
     @BeforeEach
     public void setup(){
         System.setProperty("webdriver.chrome.driver","src/test/resources/driver/chromedriver.exe");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+
         driver.get("https://todo.ly/");
         //implicit wait --> generico
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
