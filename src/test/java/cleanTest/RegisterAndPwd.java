@@ -15,9 +15,7 @@ public class RegisterAndPwd extends TestBaseTodoLy{
         menuSection.settingsButton.click();
         settingsPage.newPWD.setText("123456");
         settingsPage.oldPWD.setText("12345");
-//        settingsPage.okButton.waitClickable();
         settingsPage.okButton.click();
-//        menuSection.logoutButton.waitClickable();
         menuSection.logoutButton.click();
         mainPage.loginButton.waitClickable();
         mainPage.loginButton.click();

@@ -7,6 +7,7 @@ import singletonSession.Session;
 
 public class TestBaseTodoLy {
     public MainPage mainPage=new MainPage();
+    public LeftPanelSection leftPanelSection = new LeftPanelSection();
     public LoginModal loginModal= new LoginModal();
     public MenuSection menuSection= new MenuSection();
     public SettingsPage settingsPage = new SettingsPage();

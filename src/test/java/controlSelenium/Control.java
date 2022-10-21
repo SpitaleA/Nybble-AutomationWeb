@@ -7,10 +7,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import singletonSession.Session;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Control {
     protected By locator;
     protected WebElement control;
+    protected List<WebElement> controls = new ArrayList<>();
 
     public Control (By locator){
         this.locator=locator;
@@ -18,6 +21,10 @@ public class Control {
 
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
+    }
+    public void findControls(){
+        controls= Session.getInstance().getBrowser().findElements(this.locator);
+//        controls.get(controls.size()-1);
     }
 
     /**
@@ -37,6 +44,7 @@ public class Control {
         }
     }
 
+
     public String getText(){
         this.findControl();
         return control.getText();
@@ -52,4 +60,9 @@ public class Control {
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(this.locator));
     }
+    public void waitInvisibility(){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(this.locator));
+    }
+
 }
