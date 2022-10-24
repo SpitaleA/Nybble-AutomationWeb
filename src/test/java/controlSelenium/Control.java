@@ -31,8 +31,10 @@ public class Control {
      *
      */
     public void click(){
+        waitPresence();
         this.findControl();
         control.click();
+
     }
 
     public boolean isControlDisplayed(){
@@ -64,5 +66,20 @@ public class Control {
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(this.locator));
     }
+    public void waitVisibility(){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
+    }
+    public void waitSelectable(){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeSelected(this.locator));
+    }
+    public void waitPresence(){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(this.locator));
+    }
 
+    public List<WebElement> getControls() {
+        return controls;
+    }
 }

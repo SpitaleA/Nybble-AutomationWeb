@@ -11,6 +11,8 @@ public class CRUDProjectTest extends TestBaseTodoIst{
     public void CRUDProject() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String projectNameUpdate = "name update " + new Date().getTime();
+        Integer projectsQuantity;
+
 
         //LOGIN
         mainPage.loginButton.click();
@@ -18,7 +20,15 @@ public class CRUDProjectTest extends TestBaseTodoIst{
 
         Assertions.assertTrue(leftPanel.newProjectButton.isControlDisplayed(),"ERROR no se logeo");
 
+
+
+        leftPanel.projectList.findControls();
+        projectsQuantity = leftPanel.projectList.getControls().size();
+
+
+
         //CREATE PROJECT
+        leftPanel.newProjectButton.waitClickable();
         leftPanel.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
@@ -38,9 +48,9 @@ public class CRUDProjectTest extends TestBaseTodoIst{
         leftPanel.deleteProject.click();
         deleteProjectModal.deleteButton.click();
 
-        Assertions.assertFalse(leftPanel.projectWithNameExist(projectNameUpdate),"ERROR no se elimino el proyecto");
-
-        Thread.sleep(2000);
+//        Assertions.assertFalse(leftPanel.projectWithNameExist(projectNameUpdate),"ERROR no se elimino el proyecto");
+        leftPanel.projectList.findControls();
+        Assertions.assertTrue(projectsQuantity.equals(leftPanel.projectList.getControls().size()));
 
     };
 }
