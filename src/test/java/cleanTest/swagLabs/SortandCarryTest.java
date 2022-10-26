@@ -8,20 +8,23 @@ public class SortandCarryTest extends TestBaseSwagLabs{
     public void sortAndBuyTest() throws InterruptedException {
         String firstItemNameInCart;
         String firstItemNameAfterSortLoHi;
+
+        //LOGIN
         loginPage.userName.setText("standard_user");
         loginPage.pwd.setText("secret_sauce");
         loginPage.loginBtn.click();
 
-
+        //SELECT ITEM IN MAIN PAGE
         landingPage.lowHighBtn.click();
         firstItemNameAfterSortLoHi = landingPage.firstProductName.getText();
         landingPage.firstProductBtn.click();
         landingPage.goToCartBtn.click();
-        Thread.sleep(2000);
 
+        //CART
         firstItemNameInCart = cartPage.firstItemName.getText();
 
-        Assertions.assertEquals("dadd",firstItemNameInCart,"ERROR the product selected its not the same in the cart");
+        //VERIFICATION
+        Assertions.assertEquals(firstItemNameAfterSortLoHi,firstItemNameInCart,"ERROR the product selected its not the same in the cart");
 
     }
 }
