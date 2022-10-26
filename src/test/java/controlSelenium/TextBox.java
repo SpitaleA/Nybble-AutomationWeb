@@ -12,5 +12,9 @@ public class TextBox extends Control{
         this.control.clear();
         this.control.sendKeys(value);
     }
+    public void setTextnoClear(String value){
+        this.findControl();
+        this.control.sendKeys(value);
+    }
 
 }

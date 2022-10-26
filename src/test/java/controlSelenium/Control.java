@@ -22,9 +22,8 @@ public class Control {
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
     }
-    public void findControls(){
-        controls= Session.getInstance().getBrowser().findElements(this.locator);
-//        controls.get(controls.size()-1);
+    public Integer findControls(){
+        return Session.getInstance().getBrowser().findElements(this.locator).size()-1;
     }
 
     /**
@@ -54,6 +53,10 @@ public class Control {
     public String getAttributeValue(String attribute){
         this.findControl();
         return this.control.getAttribute(attribute);
+    }
+    public String getCssAttributeValue(String style){
+        this.findControl();
+        return this.control.getCssValue(style);
     }
 
     public void waitClickable()

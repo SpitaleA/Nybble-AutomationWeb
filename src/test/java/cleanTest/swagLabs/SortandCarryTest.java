@@ -1,10 +1,11 @@
 package cleanTest.swagLabs;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 public class SortandCarryTest extends TestBaseSwagLabs{
-    @Test
+    @RepeatedTest(2)
     public void sortAndBuyTest() throws InterruptedException {
         String firstItemNameInCart;
         String firstItemNameAfterSortLoHi;

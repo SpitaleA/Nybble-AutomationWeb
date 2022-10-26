@@ -1,8 +1,7 @@
-package pages.toDoIst;
+package pages.todoIstExam;
 
 import controlSelenium.Button;
 import controlSelenium.Label;
-import controlSelenium.TextBox;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.List;
 
 public class LeftPanelSection {
     public Button newProjectButton = new Button(By.xpath("//button[contains(@aria-label,\"adir proyecto\")]"));
+
     public Button editProject = new Button(By.xpath("//li[contains(@role,\"menuitem\")]//div[text()=\"Editar proyecto\"]"));
     public Button deleteProject = new Button(By.xpath("//div[text()=\"Eliminar proyecto\"]"));
     public List<Label> listaProyectos= new ArrayList<>();

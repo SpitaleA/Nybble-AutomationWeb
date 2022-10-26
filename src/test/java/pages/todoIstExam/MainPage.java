@@ -1,4 +1,4 @@
-package pages.toDoIst;
+package pages.todoIstExam;
 
 import controlSelenium.Button;
 import org.openqa.selenium.By;
