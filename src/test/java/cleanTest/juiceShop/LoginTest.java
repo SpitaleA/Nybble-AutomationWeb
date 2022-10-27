@@ -30,7 +30,7 @@ public class LoginTest extends TestBaseJuice{
         registerPage.securityAnswerTxtBox.setText(securityAns);
         registerPage.registerBtn.click();
 
-        Assertions.assertFalse(loginPage.loginLabel.isControlDisplayed(),"ERROR user was not registered");
+        Assertions.assertTrue(loginPage.loginLabel.isControlDisplayed(),"ERROR user was not registered");
 
         //LOGIN
         loginPage.emailTxtBox.setText(randomEmail);
