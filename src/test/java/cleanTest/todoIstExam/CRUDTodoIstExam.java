@@ -25,7 +25,7 @@ public class CRUDTodoIstExam extends TestBaseTodoIstExam{
         leftPanel.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        numberOfTasksBefore = centerTaskAreaPage.tasks.findControls();
+        numberOfTasksBefore = centerTaskAreaPage.tasks.findControlsQuantity();
 
         //CREATE TASK
         centerTaskAreaPage.addTaskBtn.click();
@@ -58,7 +58,7 @@ public class CRUDTodoIstExam extends TestBaseTodoIstExam{
         editTaskModal.deleteTaskBtn.click();
         deleteModal.deleteTaskBtn.click();
 
-        numberOfTasksAfter = centerTaskAreaPage.tasks.findControls();
+        numberOfTasksAfter = centerTaskAreaPage.tasks.findControlsQuantity();
 
         Assertions.assertEquals(numberOfTasksBefore,numberOfTasksAfter,"ERROR no se borro la tarea");
 
