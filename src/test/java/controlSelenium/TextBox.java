@@ -6,7 +6,9 @@ public class TextBox extends Control{
     public TextBox(By locator) {
         super(locator);
     }
-
+    /** Busca el control, borra lo que este escrito
+     * y escribe lo que se mande por parametro
+     */
     public void setText(String value){
         this.findControl();
         this.control.clear();
