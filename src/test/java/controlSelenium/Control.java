@@ -2,6 +2,8 @@ package controlSelenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import singletonSession.Session;
@@ -19,6 +21,7 @@ public class Control {
         this.locator=locator;
     }
 
+
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
     }
@@ -28,7 +31,23 @@ public class Control {
     public Integer findControlsQuantity(){
         return Session.getInstance().getBrowser().findElements(this.locator).size()-1;
     }
-
+    public void makeRightClickAction()
+    {
+        this.findControl();
+        Actions action = new Actions(Session.getInstance().getBrowser());
+        action.contextClick(this.control).perform();
+    }
+    public void hover(){
+        this.findControl();
+        Actions action = new Actions(Session.getInstance().getBrowser());
+        action.moveToElement(this.control).perform();
+    }
+    public void sendKeysAction(String text){
+        this.findControl();
+        Actions action = new Actions(Session.getInstance().getBrowser());
+        action.sendKeys(text)
+                .perform();
+    }
     /**
      *
      */

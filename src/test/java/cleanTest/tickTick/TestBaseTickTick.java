@@ -12,6 +12,9 @@ public class TestBaseTickTick {
     SingInPage singInPage = new SingInPage();
     AddListModal addListModal = new AddListModal();
     MainLoggedPageLeftPanel mainLoggedPageLeftPanel = new MainLoggedPageLeftPanel();
+    HabitsPage habitsPage = new HabitsPage();
+    SettingsPage settingsPage = new SettingsPage();
+    DeletingAccountModal deletingAccountModal = new DeletingAccountModal();
     @BeforeEach
     public void setup(){
         Session.getInstance().getBrowser().get("https://ticktick.com/");
