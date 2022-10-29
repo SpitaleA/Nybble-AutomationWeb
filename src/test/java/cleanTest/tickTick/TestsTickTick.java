@@ -3,11 +3,11 @@ package cleanTest.tickTick;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-import pages.tickTick.MainLoggedPage;
 
 import java.util.Date;
 
 public class TestsTickTick extends TestBaseTickTick{
+
     String email = "hola@hola.com";
     String pwd = "123456";
     @Test
@@ -89,23 +89,29 @@ public class TestsTickTick extends TestBaseTickTick{
         //LOGIN
         mainPage.singInBtn.click();
         singInPage.singIn(email,pwd);
+        mainLoggedPage.loadingPage.waitInvisibility();
 
         //CREATE TASK
         mainLoggedPage.addTaskTxtBox.waitPresence();
+        mainLoggedPageLeftPanel.accountBtn.waitClickable();
         mainLoggedPage.addTaskBtn.click();
         mainLoggedPage.addTaskTxtBox.setTextnoClear(randomNameTask + Keys.ENTER);
-
         //EDIT TASK
         mainLoggedPage.searchForTaskByName(randomNameTask).waitPresence();
         mainLoggedPage.searchForTaskByName(randomNameTask).click();
-
-//        mainLoggedPage.task4Textbox.click();
-        mainLoggedPage.getTask4EditTextbox.waitPresence();
-        mainLoggedPage.getTask4EditTextbox.setTextnoClear(Keys.chord(Keys.SHIFT, Keys.DELETE)
-                + "edited task" + randomNameTask);
+        mainLoggedPage.getTaskEditTextbox.waitPresence();
+        mainLoggedPage.getTaskEditTextbox.setTextnoClear(Keys.chord(Keys.SHIFT, Keys.DELETE)
+                + "edited " + randomNameTask);
+        mainLoggedPage.descriptionEditTextbox.click();
+        mainLoggedPage.getTaskDescriptionEditTextbox.waitPresence();
+        mainLoggedPage.getTaskDescriptionEditTextbox.setTextnoClear("description14444444444444444444");
+        mainLoggedPage.openDueDateCalendar.click();
+        mainLoggedPage.searchForTaskByName("edited "+randomNameTask).waitClickable();
+        Thread.sleep(3000);
+        mainLoggedPage.setTomorrowDueDate.click();
         mainLoggedPage.actualListName.waitPresence();
-        mainLoggedPageLeftPanel.accountBtn.click();
-        mainLoggedPage.searchForTaskByName("edited "+randomNameTask).waitPresence();
+        mainLoggedPageLeftPanel.accountBtn.waitClickable();
+        mainLoggedPage.searchForTaskByName("edited "+randomNameTask).waitClickable();
         Assertions.assertTrue(mainLoggedPage.searchForTaskByName("edited "+randomNameTask)
                 .isControlDisplayed(),"ERROR task was not edited"
         );

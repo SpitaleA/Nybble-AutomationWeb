@@ -7,6 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import singletonSession.Session;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -95,6 +96,11 @@ public class Control {
     public void waitUntilElementHasHtmlAttribute(String attribute, String value){
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
+    }
+    public void waitNuevo(){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(this.locator));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
     }
 
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
