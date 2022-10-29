@@ -12,8 +12,9 @@ public class MainLoggedPage {
             "//*[@id=\"add-task\"]//textarea[@autocorrect=\"off\"]"));
     public TextBox tasksTextContainers = new TextBox(By.xpath("//div[@id=\"task-list-content\"]/ul//span[text() and contains(@class,\"inline_3zuKd\")]"));
     public Label actualListName = new Label(By.id("project-name-bar"));
-    public TextBox taskNameTitleDetail = new TextBox(By.xpath("//div[@id=\"tasktitle\"]//textarea[@autocapitalize=\"off\"]"));
-    public TextBox prueba2 = new TextBox(By.xpath("(//textarea[@class=\"pastable\" and @autocapitalize=\"off\"])"));
+
+    public TextBox task4Textbox = new TextBox(By.xpath("(//div[contains(@class,\"text-def\")])[4]"));
+    public TextBox getTask4EditTextbox = new TextBox(By.xpath("(//textarea[@autocorrect=\"off\" and @autocapitalize=\"off\"])[2]"));
     public TextBox searchForTaskByName(String name){
         try {
             TextBox taskTextBox = new TextBox(By.xpath("//div[@id=\"task-list-content\"]/ul//span[contains(@class,\"inline_3zuKd\") and text()=\""+ name +"\"]"));

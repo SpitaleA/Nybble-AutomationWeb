@@ -83,6 +83,36 @@ public class TestsTickTick extends TestBaseTickTick{
                 "ERROR, task was not created");
     }
     @Test
+    public void editTask() throws InterruptedException {
+        String randomNameTask = "task" + new Date().getTime();
+
+        //LOGIN
+        mainPage.singInBtn.click();
+        singInPage.singIn(email,pwd);
+
+        //CREATE TASK
+        mainLoggedPage.addTaskTxtBox.waitPresence();
+        mainLoggedPage.addTaskBtn.click();
+        mainLoggedPage.addTaskTxtBox.setTextnoClear(randomNameTask + Keys.ENTER);
+
+        //EDIT TASK
+        mainLoggedPage.searchForTaskByName(randomNameTask).waitPresence();
+        mainLoggedPage.searchForTaskByName(randomNameTask).click();
+
+//        mainLoggedPage.task4Textbox.click();
+        mainLoggedPage.getTask4EditTextbox.waitPresence();
+        mainLoggedPage.getTask4EditTextbox.setTextnoClear(Keys.chord(Keys.SHIFT, Keys.DELETE)
+                + "edited task" + randomNameTask);
+        mainLoggedPage.actualListName.waitPresence();
+        mainLoggedPageLeftPanel.accountBtn.click();
+        mainLoggedPage.searchForTaskByName("edited "+randomNameTask).waitPresence();
+        Assertions.assertTrue(mainLoggedPage.searchForTaskByName("edited "+randomNameTask)
+                .isControlDisplayed(),"ERROR task was not edited"
+        );
+        Thread.sleep(3000);
+
+    }
+    @Test
     public void createNewList() throws InterruptedException {
         String randomNameList = "list" + new Date().getTime();
 
