@@ -136,7 +136,7 @@ public class TestsTickTick extends TestBaseTickTick{
         Assertions.assertEquals(randomNameList,mainLoggedPage.actualListName.getText(),"ERROR list was not created");
     }
     @Test
-    public void createAHabit() throws InterruptedException {
+    public void createAndDeleteHabit() throws InterruptedException {
         String randomNameHabit = "habit" + new Date().getTime();
 
         //LOGIN
@@ -154,6 +154,8 @@ public class TestsTickTick extends TestBaseTickTick{
         habitsPage.saveHabitBtn.click();
         habitsPage.addHabitButton.waitClickable();
 
+        Assertions.assertTrue(habitsPage.searchHabitsByName(randomNameHabit).isControlDisplayed(),"ERROR habit was not created");
+
         //DELETE HABIT
         habitsPage.searchHabitsByName(randomNameHabit).makeRightClickAction();
         habitsPage.addHabitButton.waitClickable();
@@ -161,7 +163,7 @@ public class TestsTickTick extends TestBaseTickTick{
         habitsPage.deleteButtonConfirmBtn.waitClickable();
         habitsPage.deleteButtonConfirmBtn.click();
 
-        Assertions.assertFalse(habitsPage.searchHabitsByName(randomNameHabit).isControlDisplayed(),"ERROR habit was not created");
+        Assertions.assertFalse(habitsPage.searchHabitsByName(randomNameHabit).isControlDisplayed(),"ERROR habit was not deleted");
 //        Thread.sleep(3000);
     }
 
