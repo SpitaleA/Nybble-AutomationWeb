@@ -1,5 +1,6 @@
 package controlSelenium;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -16,29 +17,85 @@ import java.util.List;
 public class Control {
     protected By locator;
     protected WebElement control;
+    protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
 
+    //********************              CONSTRUCTORS              ********************
     public Control (By locator){
         this.locator=locator;
     }
+    public Control (By locator, String controlName){
+        this.locator=locator;
+        this.controlName=controlName;
+    }
 
-
+    @Step("{0}")
+    public void step(String action){}
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
+        controls = Session.getInstance().getBrowser().findElements(this.locator);
     }
-    protected void findControls(){
-        controls= Session.getInstance().getBrowser().findElements(this.locator);
+
+    public void click(){
+        waitPresence();
+        this.findControl();
+        this.step("click on CONTROL " +controlName);
+        control.click();
     }
-    public Integer findControlsQuantity(){
-        return Session.getInstance().getBrowser().findElements(this.locator).size()-1;
+
+
+
+    //********************              GETS              ********************
+    public String getText(){
+        this.findControl();
+        this.step("Get Text from " +controlName + ", the value is: "+ control.getText());
+        return control.getText();
     }
+    public String getAttributeValue(String attribute){
+        this.findControl();
+        return this.control.getAttribute(attribute);
+    }
+    public List<WebElement> getControls() {
+        this.findControl();
+        return controls;
+    }
+    public String getCssAttributeValue(String style){
+        this.findControl();
+        return this.control.getCssValue(style);
+    }
+    public Integer getControlsQuantity(){
+        this.findControl();
+        return this.controls.size()-1;
+    }
+
+    //********************              BOOLEANS              ********************
+    public boolean hasAttributeValue(String attribute,String value){
+        this.findControl();
+        return this.control.getAttribute(attribute).contains(value);
+    }
+    /** Verifica si el control en cuestion isDisplayed
+     * @return  boolean
+     */
+    public boolean isControlDisplayed(){
+        try {
+            this.findControl();
+            this.step("Check the " +controlName + " is displayed: true");
+            return control.isDisplayed();
+        }catch (Exception e){
+            this.step("Check the " +controlName + " is displayed: false");
+            return false;
+        }
+    }
+
+
+    //********************              ACTIONS              ********************
     public void makeRightClickAction()
     {
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.contextClick(this.control).perform();
     }
-    public void hover(){
+    public void hoverAction(){
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.moveToElement(this.control).perform();
@@ -49,59 +106,8 @@ public class Control {
         action.sendKeys(text)
                 .perform();
     }
-    /**
-     *
-     */
-    public void click(){
-        waitPresence();
-        this.findControl();
-        control.click();
 
-    }
-    /** Verifica si el control en cuestion isDisplayed
-     * @return  boolean
-     */
-    public boolean isControlDisplayed(){
-        try {
-            this.findControl();
-            return control.isDisplayed();
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-
-    public String getText(){
-        this.findControl();
-        return control.getText();
-    }
-    public String getAttributeValue(String attribute){
-        this.findControl();
-        return this.control.getAttribute(attribute);
-    }
-    public boolean hasAttributeValue(String attribute,String value){
-        this.findControl();
-        return this.control.getAttribute(attribute).contains(value);
-
-    }
-    public String getCssAttributeValue(String style){
-        this.findControl();
-        return this.control.getCssValue(style);
-    }
-
-    /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
-    * @param attribute: es por ejemplo el CLASS en un elemento HTML
-    * @param value: valor dentro del ATRIBUTO HTML
-     */
-    public void waitUntilElementHasHtmlAttribute(String attribute, String value){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
-    }
-    public void waitNuevo(){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(this.locator));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
-    }
+    //********************              WAITS              ********************
 
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      */
@@ -110,6 +116,14 @@ public class Control {
         // todo --> factory para instanciar el wait una sola vez
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(this.locator));
+    }
+    /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
+     * @param attribute: es por ejemplo el CLASS en un elemento HTML
+     * @param value: valor dentro del ATRIBUTO HTML
+     */
+    public void waitUntilElementHasHtmlAttribute(String attribute, String value){
+        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
     }
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      */
@@ -121,7 +135,6 @@ public class Control {
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
     }
-
     public void waitSelectable(){
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeSelected(this.locator));
@@ -134,8 +147,19 @@ public class Control {
      * y lo devuelve
      * @return  array de WebElements
      */
-    public List<WebElement> getControls() {
-        this.findControls();
-        return controls;
-    }
+
+
+
+   /* public void waitControl(By locator, int timeOut) throws InterruptedException {
+        Label test= new Label(this.locator); // subject
+        int i = 0;
+        do{
+            Thread.sleep(1000);
+            i++;
+            this.control.click(); // refressh
+
+        }while (!test.isControlDisplayed() || i <= timeOut);
+
+
+    }*/
 }
